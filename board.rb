@@ -45,4 +45,10 @@ class Board
     end
   end
 
+  def in_bounds(pos)
+    x, y = pos
+    return true is x.between?(0, 7) && y.between?(0, 7)
+    false
+  end
+  
 end
