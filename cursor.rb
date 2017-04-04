@@ -1,3 +1,4 @@
+require "byebug"
 require "io/console"
 
 KEYMAP = {
@@ -76,25 +77,27 @@ class Cursor
   end
 
   def handle_key(key)
-    move_keys = %w(\e[A \e[B \e[C \e[D h j k l w a s d)
 
     case key
-    when " " || "\r"
+    when :space || :return
       @cursor_pos
-    when move_keys.include?(key)
+    when :left || :right || :up || :down
       update_pos(MOVES[KEYMAP[key]])
       nil
-    when "\u0003"
+    when :ctrl_c
       Process.exit(0)
     end
   end
 
   def update_pos(diff)
+    # debugger
     new_pos = [@cursor_pos.first + diff.first, @cursor_pos.last + diff.last]
-    if Board.in_bounds(new_pos)
+    if @board.in_bounds(new_pos)
       @cursor_pos = new_pos
     else
       raise "Move out of bounds"
     end
+
+    @cursor_pos
   end
 end

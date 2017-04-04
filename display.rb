@@ -23,4 +23,11 @@ class Display
       puts
     end
   end
+
+  def move_cursor
+    5.times do
+      render
+      @cursor.get_input
+    end
+  end
 end
