@@ -76,8 +76,25 @@ class Cursor
   end
 
   def handle_key(key)
+    move_keys = %w(\e[A \e[B \e[C \e[D h j k l w a s d)
+
+    case key
+    when " " || "\r"
+      @cursor_pos
+    when move_keys.include?(key)
+      update_pos(MOVES[KEYMAP[key]])
+      nil
+    when "\u0003"
+      Process.exit(0)
+    end
   end
 
   def update_pos(diff)
+    new_pos = [@cursor_pos.first + diff.first, @cursor_pos.last + diff.last]
+    if Board.in_bounds(new_pos)
+      @cursor_pos = new_pos
+    else
+      raise "Move out of bounds"
+    end
   end
 end

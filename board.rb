@@ -1,5 +1,7 @@
 
 require_relative 'null_piece'
+require_relative 'cursor'
+require_relative 'piece'
 
 
 class Board
@@ -47,8 +49,8 @@ class Board
 
   def in_bounds(pos)
     x, y = pos
-    return true is x.between?(0, 7) && y.between?(0, 7)
+    return true if x.between?(0, 7) && y.between?(0, 7)
     false
   end
-  
+
 end
